@@ -1,0 +1,67 @@
+---
+import FooterBg from "/images/unsplash_beprhhF780Ec.webp";
+
+const GqlQuery = `{
+	genericElement{
+		data{
+			id
+			attributes{
+				Footer_copyright
+			}
+		}
+	}
+}`
+
+
+const url = `${import.meta.env.Assets_URL}`;
+
+const response = await fetch(`${import.meta.env.DB_URL}`,
+	{
+	    method:'POST',
+	    headers: {
+	    	'Content-Type':'application/json',
+	    	'Authorization': `Bearer ${import.meta.env.ACCESS_TOKEN}`
+	    },
+	    body: JSON.stringify({
+	      query: GqlQuery,
+	    })
+	});
+
+const data = await response.json();
+const parseData = data.data.genericElement.data.attributes;
+---
+
+<footer class="footer">
+	<div class="relative" class="contentinfo">
+		<div class="absolute top-0 right-0 z-10 footerCurveContainer">
+			<svg class="relative" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 290.4" class="footerCurveBg">
+			    <defs>
+			        <clipPath id="footerImgFrame">
+			            <path d="M0,58.6C520.1,47.2,877.5-83.1,1080,86.3V290.4H0Z"/>
+			        </clipPath>
+			    </defs>
+			    <image class="h-full w-auto" xlink:href="images/unsplash_beprhhF780Ec.webp" alt="Island-image" clip-path="url(#footerImgFrame)"></image>
+			 </svg>
+		</div>
+		<div class="relative z-20 pt-16 md:pt-36">
+			<div class="wrapper flex flex-wrap justify-center md:justify-start items-center my-auto px-8 lg:px-3 sm:py-2">
+        		<div class="w-full md:w-auto my-auto mb-16 md:mb-0">
+	        		<img src="images/nusa-ceningan-io-logo.svg" class="mx-auto my-auto footerbrandLogo" alt="brand-logo">
+	        	</div>
+	        	<div class="md:ml-16 my-auto flex flex-wrap gap-4 md:gap-8 items-center my-auto">
+	        		<a class="footerLink" href="#">To do</a>
+	        		<a class="footerLink" href="#">Accommodation</a>
+        			<a class="footerLink" href="#">Getting There</a>
+        			<a class="footerLink" href="#">About</a>
+	        	</div>
+	        </div>
+
+	        <div class="flex justify-center items-center mt-11 footerIconContainer">
+	        	<img class="footerIcon" src="images/camera.svg" alt="camera-icon">
+	        </div>
+	        <div class="py-3">
+	        	<p class="text-center copyrightTxt">©{parseData.Footer_copyright}</p>
+	        </div>
+		</div>
+	</div>
+</footer>

@@ -1,0 +1,418 @@
+---
+import HeaderTxtBg from '/images/txtBg.svg';
+import locationIcon from '/images/location.svg';
+import HomeAboutBg from '/images/homeAboutBg.svg';
+import PlaybtnIcon from '/images/playbtn.svg';
+import PlaybtnWIcon from '/images/playbtnW.svg';
+import TodoTxtBg from '/images/todoTxtBg.svg';
+import ReviewBg from '/images/annie-spratt-3bh3elC0D7M-unsplash1.webp';
+import UserImg from '/images/Image.webp';
+import CompanySecBg from '/images/homeCompanySecBg.svg';
+import CameraBlackIcon from "/images/camera-b.svg";
+import InstaImg1 from '/images/unsplash_7VOLBVHKNLg.webp';
+import InstaImg2 from '/images/unsplash_mtQi-hnmX_I.webp';
+import InstaImg3 from '/images/unsplash_F0nIReOHGdE.webp';
+
+import HomeAccomo from '../components/HomeAccomo.jsx';
+import { Markdown } from 'astro/components';
+
+const GqlQuery = `{
+  	homepage{
+	    data{
+	      	id
+	      	attributes{
+		        Hero_title
+		        Hero_tag
+		        Hero_description
+		        Hero_button_text
+		        Hero_image{
+		            data{
+		                id
+		                attributes{
+		                    url
+		                    alternativeText
+		                }
+		            }
+		        }
+		        Hero_image_place_text
+		        About_title
+		        About_descripion
+		        About_button_text
+		        About_image{
+		        	data{
+		                id
+		                attributes{
+		                    url
+		                    alternativeText
+		                }
+		            }
+		        }
+		        Todo_title
+		        Todo_description
+		        Todo_button_text
+		        Todo_card_button_1_text
+		        Todo_card_button_2_text
+		        Todo_card_button_3_text
+		        Todo_cards{
+                    data{
+                        id
+                        attributes{
+                            title
+                            body
+                            image_blob{
+                            	data{
+	                            	id
+					                attributes{
+					                    url
+					                    alternativeText
+					                }
+                            	}
+                            }
+                        }
+                    }
+                }
+		        Boat_title
+		        Boat_description
+		        Boat_button_text
+		        Boat_logos{
+		        	data{
+		                id
+		                attributes{
+		                    Logo{
+		                    	data{
+	                            	id
+					                attributes{
+					                    url
+					                    alternativeText
+					                }
+                            	}
+		                    }
+		                }
+		            }
+		        }
+		        Instagram_title
+		        Instagram_button_text
+
+		    }
+		}
+	}
+	genericElement{
+		data{
+			id
+			attributes{
+				Instagram_link
+				Instagram_accountname
+			}
+		}
+	}
+}`
+
+const url = `${import.meta.env.Assets_URL}`;
+
+const response = await fetch(`${import.meta.env.DB_URL}`,
+	{
+	    method:'POST',
+	    headers: {
+	    	'Content-Type':'application/json',
+	    	'Authorization': `Bearer ${import.meta.env.ACCESS_TOKEN}`
+	    },
+	    body: JSON.stringify({
+	      query: GqlQuery,
+	    })
+	});
+
+const data = await response.json();
+const parseData = data.data.homepage.data.attributes;
+const todo_card1 = data.data.homepage.data.attributes.Todo_cards.data[0].attributes;
+const todo_card2 = data.data.homepage.data.attributes.Todo_cards.data[1].attributes;
+const todo_card3 = data.data.homepage.data.attributes.Todo_cards.data[2].attributes;
+const boat_logo1 = data.data.homepage.data.attributes.Boat_logos.data[0].attributes.Logo.data.attributes;
+const boat_logo2 = data.data.homepage.data.attributes.Boat_logos.data[1].attributes.Logo.data.attributes;
+const boat_logo3 = data.data.homepage.data.attributes.Boat_logos.data[2].attributes.Logo.data.attributes;
+const boat_logo4 = data.data.homepage.data.attributes.Boat_logos.data[3].attributes.Logo.data.attributes;
+const boat_logo5 = data.data.homepage.data.attributes.Boat_logos.data[4].attributes.Logo.data.attributes;
+const boat_logo6 = data.data.homepage.data.attributes.Boat_logos.data[5].attributes.Logo.data.attributes;
+const insta = data.data.genericElement.data.attributes;
+---
+
+<div class="homeHeader">
+	<div class="wrapper1 z-30 mx-auto grid sm:grid-cols-2 homeHeaderContainer">
+		<div class="mx-auto z-30 order-2 sm:order-1 px-8 lg:px-3 my-auto homeHeaderCol1">
+			<div class="homeHeaderContentContainer">
+    			<p class="my-auto flex items-center homeHeaderTag">{parseData.Hero_tag}</p>
+    			<div class="relative">
+    				<img class="absolute top-5 z-10 h-auto homeHeadingBg" src="images/txtBg.svg" alt="Background-curve">
+    				<h1 class="homeHeaderH1">{parseData.Hero_title}</h1>
+    			</div>
+    			<div class="text-lg leading-8 mb-4 prose max-w-none homeHeaderQuote">
+    				<Markdown>{parseData.Hero_description}</Markdown>
+	    		</div>
+    			<a href="#" class="px-6 py-2.5 text-sm font-medium text-white border-radius100 bg-default8Shadowed">{parseData.Hero_button_text}</a>
+			</div>
+		</div>
+
+    	<div class=" order-1 sm:order-2 homeHeaderCol2">
+			<div class="absolute homeHeroCurveContainer">
+				<div class="relative">
+					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 622.7 680.5" class="overflow-hidden right-0 homeHeroCurve">
+					    <defs>
+					        <clipPath id="heroImgFrame">
+					            <path class="heroCurvePath" d="M623,0V516.7c-59.6,75.6-130.3,149.2-225.6,162-103.8,14-199.5-56.3-273-131.3S-7.6,377.6,1.1,274.5C9.4,176.8,87.3,103,166.7,46,205.4,18.2,249.3,6.3,295.4,0Z" transform="translate(-0.3)"/>
+					        </clipPath>
+					    </defs>
+					    <image class="h-full object-cover overflow-hidden" xlink:href={url + parseData.Hero_image.data.attributes.url} alt={parseData.Hero_image.data.attributes.alternativeText} clip-path="url(#heroImgFrame)"></image>
+					</svg>
+					<div class="hidden lg:block absolute homeHeroCardContainer">
+				 		<div class="flex homeHeroCard">
+					 		<div class="homeHeroCardContent">
+					 			{parseData.Hero_image_place_text} 
+					 		</div>
+					 		<div class="homeHeroLocation">
+					 			<img class="homeHeroLocationIcon" src={locationIcon} alt="location-icon">
+					 		</div>
+					 	</div>
+				 	</div>
+				</div>
+	    	</div>
+		</div>
+	</div>
+</div>
+
+
+<div class="wrapper overflow-x-hidden mx-auto flex flex-wrap justify-center items-center md:justify-start py-20 md:py-32">
+	<div class="w-full md:w-1/2 lg:w-7/12 px-8 lg:px-3 pb-12 md:pb-0">
+		<div class="relative">
+			<img  class="homeAboutBackground" src="images/homeAboutBg.svg" alt="home-about-background-image">
+			<div class="homeAboutImgContaienr flex">
+				<svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 626.5 705.8">
+					<defs>
+						<clipPath id="homeAboutImg">
+							<path class="cls-1" d="M624,254.5c20.1,93.1-84.5,160-143.5,238.2C419.9,573.1,386.1,691,284.6,704.2,178.9,718,86.9,636.6,29.8,551.6-19,479.1,4.4,390.5,15.1,303.6,27.8,200.6,1.7,69.7,95.7,17.1s200.5,30.6,298,74.5C484.7,132.5,603.4,159.5,624,254.5Z"/>
+						</clipPath>
+					</defs>
+					<image class="h-full object-cover" class="object-scale-down" xlink:href={url + parseData.About_image.data.attributes.url} alt={parseData.About_image.data.attributes.alternativeText} clip-path="url(#homeAboutImg)"></image>
+				</svg>
+			</div>
+		</div>
+	</div>
+	<div class="w-full md:w-1/2 lg:w-5/12 flex items-center justify-center md:justify-start">
+		<div class="px-8 lg:px-3 lg:ml-16">
+			<div class="AboutTag">{parseData.About_title}</div>
+			<div class="text-lg leading-8 mb-4 prose prose-a:no-underline prose-a:font-normal max-w-none markdown aboutQuote">
+				<Markdown>{parseData.About_descripion}</Markdown>
+			</div>
+			<a href="/about" class="inline-flex items-center justify-center px-5 bg-downy moreDetailsBtn">{parseData.About_button_text}
+				<img class="h-3.5 ml-2.5" src="images/playbtn.svg" alt="playbutton-icon">
+			</a>
+		</div>
+	</div>
+</div>
+
+<div class="bg-lightGreen overflow-x-hidden">
+	<div class="wrapper w-full mx-auto flex flex-wrap justify-center px-8 lg:px-0 homeTodoSec">
+    	<div class="relative pr-2 pr-6 pl-2 homeTodoCol1">
+    		<div class="order-1 mb-11 sm:ml-6 sm:mb-6">
+    			<div class="hidden sm:block absolute ml-auto z-10 homeTodoCardNum homeTodoCardNum1">1</div>
+
+				<div class="relative p-3.5 mx-auto sm:mr-0 sm:ml-auto z-20 overflow-hidden homeTodoCard">
+					<div class="homeTodoCard-ImgContainer overflow-hidden">
+						<img class="w-full h-full object-cover" src={url + todo_card1.image_blob.data.attributes.url} alt={url + todo_card1.image_blob.data.attributes.alternativeText} />
+					</div>
+					<div class="pl-2.5 homeTodoCard-Content">
+						<div class="py-3 homeTodoCard-Tag">{todo_card1.title}</div>
+						<div class="mb-5 overflow-hidden prose prose-a:no-underline prose-a:font-normal max-w-none markdown homeTodoCard-Txt">
+							<Markdown>{todo_card1.body}</Markdown>
+						</div>
+					</div>
+					<div class="flex justify-center">
+						<a href="#" class="text-sm text-white inline-flex items-center justify-center font-medium bg-default8 homeTodoCardBtn">{parseData.Todo_card_button_1_text}
+							<img class="h-2.5 ml-2" src={PlaybtnWIcon} alt="playbutton-icon">
+						</a>
+					</div>
+				</div>
+    		</div>
+
+    		<div class="sm:absolute sm:top-52 order-2 mb-11 sm:mb-6 sm:mr-6 sm:ml-20 xl:mb-0 sm:my-auto">
+    			
+    			<div class="hidden sm:block absolute ml-auto z-10 homeTodoCardNum homeTodoCardNum2">2</div>
+    			
+				<div class="relative p-3.5 mx-auto sm:mr-auto sm:ml-0  z-20 overflow-hidden homeTodoCard">
+					<div class="homeTodoCard-ImgContainer overflow-hidden">
+						<img class="w-full h-full object-cover" src={url + todo_card2.image_blob.data.attributes.url} alt={url + todo_card2.image_blob.data.attributes.alternativeText} />
+					</div>
+					<div class="pl-2.5 homeTodoCard-Content">
+						<div class="py-3 homeTodoCard-Tag">{todo_card2.title}</div>
+						<div class="mb-5 overflow-hidden prose prose-a:no-underline prose-a:font-normal max-w-none markdown homeTodoCard-Txt">
+							<Markdown>{todo_card2.body}</Markdown>
+						</div>
+					</div>
+					<div class="flex justify-center">
+						<a href="#" class="text-sm text-white inline-flex items-center justify-center font-medium bg-default8 homeTodoCardBtn">{parseData.Todo_card_button_2_text}
+							<img class="h-2.5 ml-2" src={PlaybtnWIcon} alt="playbutton-icon">
+						</a>
+					</div>
+				</div>
+    		</div>
+
+    		<div class="order-3 mb-11 sm:ml-6 sm:mb-6">
+    			<div class="hidden sm:block absolute ml-auto z-10 homeTodoCardNum homeTodoCardNum3">3</div>
+    			
+				<div class="relative p-3.5 mx-auto sm:mr-0 sm:ml-auto z-20 overflow-hidden homeTodoCard">
+					<div class="homeTodoCard-ImgContainer overflow-hidden">
+						<img class="w-full h-full object-cover" src={url + todo_card3.image_blob.data.attributes.url} alt={url + todo_card3.image_blob.data.attributes.alternativeText} />
+					</div>
+					<div class="pl-2.5 homeTodoCard-Content">
+						<div class="py-3 homeTodoCard-Tag">{todo_card3.title}</div>
+						<div class="mb-5 overflow-hidden prose prose-a:no-underline prose-a:font-normal max-w-none markdown homeTodoCard-Txt">
+							<Markdown>{todo_card3.body}</Markdown>
+						</div>
+					</div>
+					<div class="flex justify-center">
+						<a href="#" class="inline-flex items-center justify-center text-sm text-white font-medium bg-default8 homeTodoCardBtn">{parseData.Todo_card_button_3_text}
+							<img class="h-2.5 ml-2" src={PlaybtnWIcon} alt="playbutton-icon">
+						</a>
+					</div>
+				</div>
+    		</div>
+    	</div>
+    	<div class="relative lg:pl-2 flex items-center homeTodoCol2">
+    		<div class="absolute z-10 homeTodoTxtBg">
+    			<img src="images/todoTxtBg.svg" alt="Background-curve">
+    		</div>
+    		<div class="w-full -mt-24 sm:-mt-32 md:-mt-40 xl:-mt-36 relative z-20">
+    			<div class="w-full px-0 sm:pl-12 md:pl-14 lg:pl-14 xl:pl-16 sm:pr-5 lg:pr-2 xl:pr-0 mx-auto homeTodoTxtContainer">
+    				<p class="homeTodoTag">{parseData.Todo_title}</p>
+	    			<div class="text-lg leading-8 lg:my-7 xl:my-9 mb-4 prose prose-a:no-underline prose-a:font-normal max-w-none markdown homeTodoQuote">
+	    				<Markdown>{parseData.Todo_description}</Markdown>
+	    			</div>
+	    			<a href="/todo" class="inline-flex items-center justify-center px-5 mt-9 lg:mt-8 bg-downy moreDetailsBtn ">{parseData.Todo_button_text}
+	    				<img class="h-3.5 ml-2.5" src="images/playbtn.svg" alt="playbutton-icon">
+	    			</a>
+    			</div>
+    		</div>
+    	</div>
+    </div>
+</div>
+
+<HomeAccomo />
+
+<div class="overflow-x-hidden py-14 px-8 lg:px-3 mx-auto">
+	<div class="wrapper flex flex-wrap mx-auto">
+		<div class="w-full md:w-1/2 flex items-center justify-center my-auto testimonImgContent">
+    		<div class="relative inline-flex items-center w-full">
+				<div class="absolute right-0 z-10 testimonCurve">
+					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 912.6 664">
+					    <defs>
+					        <clipPath id="testimonImgFrame">
+					            <path d="M385.8.2C599.3-4,826.7,59.4,892.4,197.1S858,548.1,688.5,634.9C509.7,726.5,401,581.4,225.9,486.6,69.3,401.8-44.8,400.5,17.2,271.3S111.9.2,385.8.2Z"/>
+					        </clipPath>
+					    </defs>
+					    <image class="w-full" xlink:href="images/annie-spratt-3bh3elC0D7M-unsplash1.webp" alt="Island-image" clip-path="url(#testimonImgFrame)"></image>
+					 </svg>
+				</div>
+				<div class="absolute flex justify-center md:justify-start inset-x-0 z-20">
+			 		<div class="p-7 lg:p-8 pr-9 md:pr-8 lg:pr-12 font-bold testimonImgContentCard">
+				 		<p class="testimonImgContentCardTag">Reviews</p>
+				 		<p class="capitalize testimonImgContentCardTxt">What people say about Le Pirate Beach Club </p>
+				 	</div>
+			 	</div>
+	    	</div>
+    	</div>
+    	<div class="w-full md:w-1/2 flex items-center my-auto testimonContent">
+    		<div class="ml-9">
+    			<div class="flex flex-wrap gap-1 items-center pl-9 sm:pl-8">
+    				<div class="mr-auto text-3xl color-yellow">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+    				<div class="text-xs lg:text-base font-semibold testimonDate">Reviewed December 3 2021</div>
+    			</div>
+    			<div class="relative testimonCard">
+    				<div class="absolute -top-7 -left-7 sm:-left-9 rounded-full overflow-hidden testimonImgContainer">
+    					<img class="w-full h-full object-cover" src="images/Image.webp" alt="Reviewers-image">
+    				</div>
+    				<div>
+						<p class="text-sm md:text-base lg:text-lg xl:text-xl font-medium testimonTxt">On the Windows talking painted pasture yet its express parties use. Sure last upon he same as knew next. Of believed or diverted no.</p>
+						<p class="text-sm md:text-base lg:text-lg font-medium testimonUserName">Mike taylor</p>
+						<p class="text-xs md:text-base lg:text-lg font-medium testimonUserLocation">Lahore, Pakistan</p>
+    				</div>
+    			</div>
+    		</div>
+    	</div>
+	</div>
+</div>
+
+<div class="bg-lightGreen overflow-hidden">
+    <div class="wrapper flex flex-wrap justify-center overflow-x-hidden py-20 md:py-24 companySec">
+    	<div class="order-2 md:order-1 w-full md:w-1/2 lg:w-5/12 px-8 lg:px-3 flex items-center my-auto my-16 companySecCol1">
+    		<div class="companyContentContainer">
+    			<div class="font-semibold capitalize companySecTag">{parseData.Boat_title}</div>
+	    		<div class="py-10 md:py-12 lg:py-14 xl:py-16 text-lg font-medium leading-8 prose prose-a:no-underline prose-a:font-normal max-w-none markdown companySecTxt">
+	    			<Markdown>{parseData.Boat_description}</Markdown>
+	    		</div>
+	    		<a href="/boat" class="inline-flex items-center justify-center py-2 px-5 mt-3 font-medium bg-downy border-radius100">{parseData.Boat_button_text}
+	    			<img class="h-3.5 ml-2.5" src={PlaybtnIcon} alt="playbutton-icon">
+	    		</a>
+    		</div>
+    	</div>
+    	<div class="order-1 md:order-2 w-full sm:w-2/3 md:w-1/2 lg:w-7/12 relative px-8 lg:px-3 xl:pl-14 mb-16 md:my-16 flex justify-center items-center companySecCol2">
+    		<img src="images/homeCompanySecBg.svg" alt="Background-curve">
+			<div class="flex flex-wrap justify-center items-center absolute inset-0 z-20">
+				<div class="-mt-10 sm:-mt-20">
+					<div class="flex justify-start gap-7 md:gap-x-6 lg:gap-x-12 xl:gap-x-16">
+    					<div class="overflow-hidden p-2 sm:p-3 md:px-5 mt-7 sm:mt-10 lg:mt-14 xl:mt-16 inline-flex items-center justify-center bg-white border-radius100 companyImgContainer">
+		    				<img class="h-full w-full object-contain" src={url + boat_logo1.url} alt={url + boat_logo1.alternativeText} />
+		    			</div>
+		    			<div class="overflow-hidden p-2 sm:p-3 md:px-5 mt-7 sm:mt-10 lg:mt-14 xl:mt-16 inline-flex items-center justify-center bg-white border-radius100 companyImgContainer">
+		    				<img class="h-full w-full object-contain" src={url + boat_logo2.url} alt={url + boat_logo2.alternativeText}>
+		    			</div>
+    				</div>
+    				
+
+	    			<div class="flex justify-end gap-7 md:gap-x-6 lg:gap-x-12 xl:gap-x-16 ml-6 lg:ml-20">
+	    				<div class="overflow-hidden p-2 sm:p-3 md:px-5 mt-7 sm:mt-10 lg:mt-14 xl:mt-16 inline-flex items-center justify-center bg-white border-radius100 companyImgContainer">
+		    				<img class="h-full w-full object-contain" src={url + boat_logo3.url} alt={url + boat_logo3.alternativeText}>
+		    			</div>
+		    			<div class="overflow-hidden p-2 sm:p-3 md:px-5 mt-7 sm:mt-10 lg:mt-14 xl:mt-16 inline-flex items-center justify-center bg-white border-radius100 companyImgContainer">
+		    				<img class="h-full w-full object-contain" src={url + boat_logo4.url} alt={url + boat_logo4.alternativeText}>
+		    			</div>
+	    			</div>
+		    		
+		    		<div class="flex justify-start gap-7 md:gap-x-6 lg:gap-x-12 xl:gap-x-16">
+		    			<div class="overflow-hidden p-2 sm:p-3 md:px-5 mt-7 sm:mt-10 lg:mt-14 xl:mt-16 inline-flex items-center justify-center bg-white border-radius100 companyImgContainer">
+		    				<img class="h-full w-full object-contain" src={url + boat_logo5.url} alt={url + boat_logo5.alternativeText}>
+		    			</div>
+		    			<div class="overflow-hidden p-2 sm:p-3 md:px-5 mt-7 sm:mt-10 lg:mt-14 xl:mt-16 inline-flex items-center justify-center bg-white border-radius100 companyImgContainer">
+		    				<img class="h-full w-full object-contain" src={url + boat_logo6.url} alt={url + boat_logo6.alternativeText}>
+		    			</div>
+		    		</div>
+				</div>
+			</div>
+    	</div>
+    </div>
+</div>
+
+<div class="wrapper flex flex-wrap justify-center overflow-x-hidden px-8 lg:px-3 py-16">
+	<div class="text-center">
+		<div class="w-full relative">
+			<img class="absolute top-1 inset-0 z-10 h-full instaBg" src="images/txtBg.svg" alt="Background-curve">
+			<div class="capitalize instaTag">{parseData.Instagram_title}</div>
+		</div>
+		<div class="mt-4 inline-flex justify-center items-center">
+			<img class="mr-2 instaCamIcon" src="images/camera-b.svg" alt="camera-icon" />
+			<div class="instaTxt">{insta.Instagram_accountname}</div>
+		</div>
+	</div>
+
+	<div class="w-full grid sm:grid-cols-1 md:grid-cols-3 gap-12 justify-items-center my-20">
+		<div class="overflow-hidden InstaImgContainer">
+			<img class="w-full h-full object-cover" src="images/unsplash_7VOLBVHKNLg.webp" alt="sunset-image">
+		</div>
+		<div class="overflow-hidden InstaImgContainer">
+			<img class="w-full h-full object-cover" src="images/unsplash_mtQi-hnmX_I.webp" alt="boat-image">
+		</div>
+		<div class="overflow-hidden InstaImgContainer">
+			<img class="w-full h-full object-cover" src="images/unsplash_F0nIReOHGdE.webp" alt="mountain-image">
+		</div>
+	</div>
+	<a href={insta.Instagram_link} class="inline-flex items-center justify-center py-2 px-5 mt-3 font-medium bg-downy border-radius100">{parseData.Instagram_button_text}
+		<img class="h-3.5 ml-2.5" src="images/playbtn.svg" alt="playbutton-icon">
+	</a>
+</div>

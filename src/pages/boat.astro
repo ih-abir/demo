@@ -1,0 +1,449 @@
+---
+import '../styles/global.css';
+import '../styles/styles.css';
+// Component Imports
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+
+import { Markdown } from 'astro/components';
+
+// const path = Astro.site.pathname;
+// console.log(Astro.canonicalURL.pathname)
+
+const GqlQuery = `{
+  	boatsOverview{
+	    data{
+	      	id
+	      	attributes{
+		        Title
+		        Description
+		        Hero_image{
+		            data{
+		                id
+		                attributes{
+		                    url
+		                    alternativeText
+		                }
+		            }
+		        }
+		        slug
+		    }
+		}
+	}
+}`
+
+const url = `${import.meta.env.Assets_URL}`;
+
+const response = await fetch(`${import.meta.env.DB_URL}`,
+	{
+	    method:'POST',
+	    headers: {
+	    	'Content-Type':'application/json',
+	    	'Authorization': `Bearer ${import.meta.env.ACCESS_TOKEN}`
+	    },
+	    body: JSON.stringify({
+	      query: GqlQuery,
+	    })
+	});
+
+const data = await response.json();
+const parseData = data.data.boatsOverview.data.attributes;
+
+let title = 'Boats | NusaCeningan';
+---
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width">
+	<title>{title}</title>
+
+	<link rel="icon" href="/images/nusa-ceningan-favicon.svg" />
+</head>
+<body>
+	<div class="overflow-hidden">
+		<Navbar />
+		<main>
+			<div class="header">
+		    	<div class="wrapper1 z-30 mx-auto grid sm:grid-cols-2 headerContainer">
+	    			<div class="col-span-1 sm:col-span-1 px-8 lg:px-3 mx-auto z-30 order-2 sm:order-1 my-auto headerCol1">
+	    				<div class="headerContentContainer">
+			    			<div class="relative overflow-y-hidden w-full lg:w-10/12 xl:w-7/12 headerH1Container">
+			    				<img class="absolute top-3 sm:top-0.5 z-10 h-auto headingBg" src="images/txtBg.svg" alt="Background-curve">
+			    				<h1 class="headerH1">{parseData.Title}</h1>
+			    			</div>
+			    			<p class="text-lg leading-8 sm:mb-4 prose prose-a:no-underline prose-a:font-normal max-w-none markdown headerQuote">
+			    				<Markdown>
+			    					{parseData.Description}
+			    				</Markdown>
+			    			</p>
+	    				</div>
+	    			</div>
+
+			    	<div class="col-span-1 sm:col-span-1 order-1 sm:order-2 headerCol2">
+		    			<div class="absolute heroCurveContainer">
+							<div class="relative">
+								<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 622.7 680.5" class="overflow-hidden right-0 heroCurve">
+								    <defs>
+								        <clipPath id="heroImgFrame">
+								            <path class="heroCurvePath" d="M623,0V516.7c-59.6,75.6-130.3,149.2-225.6,162-103.8,14-199.5-56.3-273-131.3S-7.6,377.6,1.1,274.5C9.4,176.8,87.3,103,166.7,46,205.4,18.2,249.3,6.3,295.4,0Z" transform="translate(-0.3)"/>
+								        </clipPath>
+								    </defs>
+								    <image class="h-full object-cover overflow-hidden" xlink:href="images/tandya-rachmat-mUZ7gUmr0oU-unsplash.webp" alt="Island-image" clip-path="url(#heroImgFrame)"></image>
+								</svg>
+							</div>
+				    	</div>
+					</div>
+		    	</div>
+		    </div>
+
+		    <div class="wrapper mx-auto flex flex-wrap gap-16 px-8 lg:px-3 py-10">
+		    	<div class="boatCard w-full flex flex-wrap items-center">
+		    		<div class="w-full flex items-center">
+		    			<div class="p-1 bg-white default8Shadowed boatLogoContainer">
+		    				<img class="w-full h-full object-contain" src="images/image 34.webp" alt="company-logo">
+		    			</div>
+		    			<h2 class="pl-4">Arthamas Express</h2>
+		    		</div>
+
+		    		<div class="grid md:grid-cols-2 xl:grid-cols-11 gap-10 lg:gap-12 my-8">
+		    			<div class="md:col-span-1 xl:col-span-6">
+			    			<div class="boatImgContainer">
+			    				<img class="w-full h-full object-cover" src="images/image 46.webp" alt="boat-image">
+			    			</div>
+			    		</div>
+			    		<div class="md:col-span-1 xl:col-span-5" >
+			    			<div class="w-full sm:w-4/5 md:w-full grid grid-cols-5 gap-x-2.5 gap-y-3 mb-8">
+			    				<div class="col-span-2">
+			    					<div class="text-xs font-bold">Trips</div>
+			    				</div>
+			    				<div class="col-auto text-center">
+			    					<div class="text-xs font-bold">Time:</div>
+			    				</div>
+			    				<div class="col-span-2">
+			    					<div class="pl-4 text-xs font-bold">Price:</div>
+			    				</div>
+
+			    				<div class="col-span-2">
+			    					<div class="flex flex-wrap">
+			    						<p class="block font-semibold boatCardTxt">Suna</p>
+			    						<span class="mx-2 text-lg font-extrabold leading-4">&#8640;</span>
+			    						<p class="block font-semibold boatCardTxt">Nusa Lembongan</p>
+			    					</div>
+			    				</div>
+
+			    				<div class="col-auto justify-center items-center text-center">
+			    					<div class="timeTxt">4:00PM</div>
+			    				</div>
+			    				<div class="col-span-2">
+			    					<div>
+			    						<p class="font-semibold boatCardTxt">IDR 350.000 (adult)</p>
+			    						<p class="font-semibold boatCardTxt">IDR 240.000 (4-12 years)</p>
+			    					</div>
+			    				</div>
+
+			    				<div class="col-span-2">
+			    					<div class="flex flex-wrap">
+			    						<p class="block font-semibold boatCardTxt">Suna</p>
+			    						<span class="mx-2 text-lg font-extrabold leading-4">&#8652;</span>
+			    						<p class="block font-semibold boatCardTxt">Nusa Lembongan</p>
+			    					</div>
+			    				</div>
+			    				<div class="col-auto justify-center items-center text-center">
+			    					<div class="timeTxt">4:00PM</div>
+			    				</div>
+			    				<div class="col-span-2">
+			    					<div>
+			    						<p class="font-semibold boatCardTxt">IDR 550.000 (adult)</p>
+			    						<p class="font-semibold boatCardTxt">IDR 350.000 (4-12 years)</p>
+			    					</div>
+			    				</div>
+			    			</div>
+
+			    			<div class="w-full">
+			    				<div class="w-full mb-6 font-bold boatCardTxt">Reviews:</div>
+
+			    				<div class="flex flex-wrap items-center">
+			    					<div class="mr-2.5 boatCardImgContainer">
+			    						<img class="h-full w-full object-cover" src="images/Image.webp" alt="user-profile-image">
+			    					</div>
+			    					<div>
+			    						<div class="flex items-center pb-0.5">
+			    							<img class="h-2.5 w-2 md:w-2.5" src="images/G.svg" alt="Google-icon">
+			    							<div class="ml-1 text-xs color-yellow">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+			    						</div>
+			    						<div class="font-bold capitalize boatCardTxt">Daphne McLeod</div>
+			    					</div>
+			    				</div>
+
+			    				<div class="my-5 leading-3 md:leading-4 boatCardReviewTxt">
+			    					Excellent company and reliable online services. For a 250k boat ticket (about $25 AUD) Arthamas also drove us from our Lembongan accommodation to our Kuta hotel all the way from Sanur. Our driver also did an airport drop off and was very friendly. Very happy with this service!
+			    				</div>
+
+			    				<div class="flex flex-wrap gap-4 md:gap-10">
+			    					<div class="flex items-center gap-1 md:gap-2.5">
+			    						<img class="h-2.5 md:h-4 w-2.5 md:w-4" src="images/G.svg" alt="Google-icon">
+			    						<div class="px-4 py-0.5 ml-1.5 md:ml-3 font-medium boatCardReviewNum"><span class="text-base font-bold color-yellow">&#9733;</span> 4.0</div>
+			    						<p class="font-semibold boatCardReviewAmount">(19)</p>
+			    					</div>
+			    					<div class="flex items-center gap-1 md:gap-2.5">
+			    						<img class="h-2.5 md:h-4 w-2.5 md:w-4" src="images/tripadvisor.svg" alt="tripadvisor-icon">
+			    						<div class="px-4 py-0.5 ml-1.5 md:ml-3 font-medium boatCardReviewNum"><span class="text-base font-bold color-yellow">&#9733;</span> 4.0</div>
+			    						<p class="font-semibold boatCardReviewAmount">(19)</p>
+			    					</div>
+			    				</div>
+
+			    				<div class="flex items-center gap-2 mt-14">
+			    					<a href="#" class="text-sm leading-4 font-semibold capitalize color-green-pea flex underline-animated">Visit Site</a>
+		    						<a href="#" class="ml-auto py-2 px-5 inline-flex items-center justify-center text-sm font-medium bg-downy border-radius100">Book now
+					    				<img class="h-3.5 ml-2.5" src="images/playbtn.svg" alt="playbutton-icon">
+					    			</a>
+			    				</div>
+			    			</div>
+			    		</div>
+		    		</div>
+		    	</div>
+
+		    	<div class="boatCard w-full flex flex-wrap items-center">
+		    		<div class="w-full flex items-center">
+		    			<div class="p-1 bg-white default8Shadowed boatLogoContainer">
+		    				<img class="w-full h-full object-contain" src="images/image 39.svg" alt="company-logo">
+		    			</div>
+		    			<h2 class="pl-4">Glory Fast Cruise</h2>
+		    		</div>
+
+		    		<div class="grid md:grid-cols-2 xl:grid-cols-11 gap-10 lg:gap-12 my-8">
+		    			<div class="md:col-span-1 xl:col-span-6">
+			    			<div class="boatImgContainer">
+			    				<img class="w-full h-full object-cover" src="images/image 46_1.webp" alt="boat-image">
+			    			</div>
+			    		</div>
+			    		<div class="md:col-span-1 xl:col-span-5" >
+			    			<div class="w-full sm:w-4/5 md:w-full grid grid-cols-5 gap-x-2.5 gap-y-3 mb-8">
+			    				<div class="col-span-2">
+			    					<div class="text-xs font-bold">Trips</div>
+			    				</div>
+			    				<div class="col-auto text-center">
+			    					<div class="text-xs font-bold">Time:</div>
+			    				</div>
+			    				<div class="col-span-2">
+			    					<div class="pl-4 text-xs font-bold">Price:</div>
+			    				</div>
+
+			    				<div class="col-span-2">
+			    					<div class="flex flex-wrap">
+			    						<p class="block font-semibold boatCardTxt">Suna</p>
+			    						<span class="mx-2 text-lg font-extrabold leading-4">&#8640;</span>
+			    						<p class="block font-semibold boatCardTxt">Nusa Lembongan</p>
+			    					</div>
+			    				</div>
+
+			    				<div class="col-auto justify-center items-center text-center">
+			    					<div class="timeTxt">4:00PM</div>
+			    				</div>
+			    				<div class="col-span-2">
+			    					<div>
+			    						<p class="font-semibold boatCardTxt">IDR 350.000 (adult)</p>
+			    						<p class="font-semibold boatCardTxt">IDR 240.000 (4-12 years)</p>
+			    					</div>
+			    				</div>
+
+			    				<div class="col-span-2">
+			    					<div class="flex flex-wrap">
+			    						<p class="block font-semibold boatCardTxt">Suna</p>
+			    						<span class="mx-2 text-lg font-extrabold leading-4">&#8640;</span>
+			    						<p class="block font-semibold boatCardTxt">Nusa Lembongan</p>
+			    					</div>
+			    				</div>
+			    				<div class="col-auto justify-center items-center text-center">
+			    					<div class="timeTxt">4:00PM</div>
+			    				</div>
+			    				<div class="col-span-2">
+			    					<div>
+			    						<p class="font-semibold boatCardTxt">IDR 350.000 (adult)</p>
+			    						<p class="font-semibold boatCardTxt">IDR 240.000 (4-12 years)</p>
+			    					</div>
+			    				</div>
+			    			</div>
+
+			    			<div class="w-full">
+			    				<div class="w-full mb-6 font-bold boatCardTxt">Reviews:</div>
+
+			    				<div class="flex flex-wrap items-center">
+			    					<div class="mr-2.5 boatCardImgContainer">
+			    						<img class="h-full w-full object-cover" src="images/Image.webp" alt="user-profile-image">
+			    					</div>
+			    					<div>
+			    						<div class="flex items-center pb-0.5">
+			    							<img class="h-2.5 w-2 md:w-2.5" src="images/G.svg" alt="Google-icon">
+			    							<div class="ml-1 text-xs color-yellow">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+			    						</div>
+			    						<div class="font-bold capitalize boatCardTxt">Daphne McLeod</div>
+			    					</div>
+			    				</div>
+
+			    				<div class="my-5 leading-3 md:leading-4 boatCardReviewTxt">
+			    					Excellent company and reliable online services. For a 250k boat ticket (about $25 AUD) Arthamas also drove us from our Lembongan accommodation to our Kuta hotel all the way from Sanur. Our driver also did an airport drop off and was very friendly. Very happy with this service!
+			    				</div>
+
+			    				<div class="flex flex-wrap gap-4 md:gap-10">
+			    					<div class="flex items-center gap-1 md:gap-2.5">
+			    						<img class="h-2.5 md:h-4 w-2.5 md:w-4" src="images/G.svg" alt="Google-icon">
+			    						<div class="px-4 py-0.5 ml-1.5 md:ml-3 font-medium boatCardReviewNum"><span class="text-base font-bold color-yellow">&#9733;</span> 4.0</div>
+			    						<p class="font-semibold boatCardReviewAmount">(19)</p>
+			    					</div>
+			    					<div class="flex items-center gap-1 md:gap-2.5">
+			    						<img class="h-2.5 md:h-4 w-2.5 md:w-4" src="images/tripadvisor.svg" alt="tripadvisor-icon">
+			    						<div class="px-4 py-0.5 ml-1.5 md:ml-3 font-medium boatCardReviewNum"><span class="text-base font-bold color-yellow">&#9733;</span> 4.0</div>
+			    						<p class="font-semibold boatCardReviewAmount">(19)</p>
+			    					</div>
+			    				</div>
+
+			    				<div class="flex items-center gap-2 mt-14">
+			    					<a href="#" class="text-sm leading-4 font-semibold capitalize color-green-pea flex underline-animated">Visit Site</a>
+		    						<a href="#" class="ml-auto py-2 px-5 inline-flex items-center justify-center text-sm font-medium bg-downy border-radius100">Book now
+					    				<img class="h-3.5 ml-2.5" src="images/playbtn.svg" alt="playbutton-icon">
+					    			</a>
+			    				</div>
+			    			</div>
+			    		</div>
+		    		</div>
+		    	</div>
+
+		    	<div class="boatCard w-full flex flex-wrap items-center">
+		    		<div class="w-full flex items-center">
+		    			<div class="p-1 bg-white default8Shadowed boatLogoContainer">
+		    				<img class="w-full h-full object-contain" src="images/image 35.webp" alt="company-logo">
+		    			</div>
+		    			<h2 class="pl-4">D’camel</h2>
+		    		</div>
+
+		    		<div class="grid md:grid-cols-2 xl:grid-cols-11 gap-10 lg:gap-12 my-8">
+		    			<div class="md:col-span-1 xl:col-span-6">
+			    			<div class="boatImgContainer">
+			    				<img class="w-full h-full object-cover" src="images/image 46_2.webp" alt="boat-image">
+			    			</div>
+			    		</div>
+			    		<div class="md:col-span-1 xl:col-span-5" >
+			    			<div class="w-full sm:w-4/5 md:w-full grid grid-cols-5 gap-x-2.5 gap-y-3 mb-8">
+			    				<div class="col-span-2">
+			    					<div class="text-xs font-bold">Trips</div>
+			    				</div>
+			    				<div class="col-auto text-center">
+			    					<div class="text-xs font-bold">Time:</div>
+			    				</div>
+			    				<div class="col-span-2">
+			    					<div class="pl-4 text-xs font-bold">Price:</div>
+			    				</div>
+
+			    				<div class="col-span-2">
+			    					<div class="flex flex-wrap">
+			    						<p class="block font-semibold boatCardTxt">Suna</p>
+			    						<span class="mx-2 text-lg font-extrabold leading-4">&#8640;</span>
+			    						<p class="block font-semibold boatCardTxt">Nusa Lembongan</p>
+			    					</div>
+			    				</div>
+
+			    				<div class="col-auto justify-center items-center text-center">
+			    					<div class="timeTxt">4:00PM</div>
+			    				</div>
+			    				<div class="col-span-2">
+			    					<div>
+			    						<p class="font-semibold boatCardTxt">IDR 350.000 (adult)</p>
+			    						<p class="font-semibold boatCardTxt">IDR 240.000 (4-12 years)</p>
+			    					</div>
+			    				</div>
+
+			    				<div class="col-span-2">
+			    					<div class="flex flex-wrap">
+			    						<p class="block font-semibold boatCardTxt">Suna</p>
+			    						<span class="mx-2 text-lg font-extrabold leading-4">&#8640;</span>
+			    						<p class="block font-semibold boatCardTxt">Nusa Lembongan</p>
+			    					</div>
+			    				</div>
+			    				<div class="col-auto justify-center items-center text-center">
+			    					<div class="timeTxt">4:00PM</div>
+			    				</div>
+			    				<div class="col-span-2">
+			    					<div>
+			    						<p class="font-semibold boatCardTxt">IDR 350.000 (adult)</p>
+			    						<p class="font-semibold boatCardTxt">IDR 240.000 (4-12 years)</p>
+			    					</div>
+			    				</div>
+			    			</div>
+
+			    			<div class="w-full">
+			    				<div class="w-full mb-6 font-bold boatCardTxt">Reviews:</div>
+
+			    				<div class="flex flex-wrap items-center">
+			    					<div class="mr-2.5 boatCardImgContainer">
+			    						<img class="h-full w-full object-cover" src="images/Image.webp" alt="user-profile-image">
+			    					</div>
+			    					<div>
+			    						<div class="flex items-center pb-0.5">
+			    							<img class="h-2.5 w-2 md:w-2.5" src="images/G.svg" alt="Google-icon">
+			    							<div class="ml-1 text-xs color-yellow">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+			    						</div>
+			    						<div class="font-bold capitalize boatCardTxt">Daphne McLeod</div>
+			    					</div>
+			    				</div>
+
+			    				<div class="my-5 leading-3 md:leading-4 boatCardReviewTxt">
+			    					Excellent company and reliable online services. For a 250k boat ticket (about $25 AUD) Arthamas also drove us from our Lembongan accommodation to our Kuta hotel all the way from Sanur. Our driver also did an airport drop off and was very friendly. Very happy with this service!
+			    				</div>
+
+			    				<div class="flex flex-wrap gap-4 md:gap-10">
+			    					<div class="flex items-center gap-1 md:gap-2.5">
+			    						<img class="h-2.5 md:h-4 w-2.5 md:w-4" src="images/G.svg" alt="Google-icon">
+			    						<div class="px-4 py-0.5 ml-1.5 md:ml-3 font-medium boatCardReviewNum"><span class="text-base font-bold color-yellow">&#9733;</span> 4.0</div>
+			    						<p class="font-semibold boatCardReviewAmount">(19)</p>
+			    					</div>
+			    					<div class="flex items-center gap-1 md:gap-2.5">
+			    						<img class="h-2.5 md:h-4 w-2.5 md:w-4" src="images/tripadvisor.svg" alt="tripadvisor-icon">
+			    						<div class="px-4 py-0.5 ml-1.5 md:ml-3 font-medium boatCardReviewNum"><span class="text-base font-bold color-yellow">&#9733;</span> 4.0</div>
+			    						<p class="font-semibold boatCardReviewAmount">(19)</p>
+			    					</div>
+			    				</div>
+
+			    				<div class="flex items-center gap-2 mt-14">
+			    					<a href="#" class="text-sm leading-4 font-semibold capitalize color-green-pea flex underline-animated">Visit Site</a>
+		    						<a href="#" class="ml-auto py-2 px-5 inline-flex items-center justify-center text-sm font-medium bg-downy border-radius100">Book now
+					    				<img class="h-3.5 ml-2.5" src="images/playbtn.svg" alt="playbutton-icon">
+					    			</a>
+			    				</div>
+			    			</div>
+			    		</div>
+		    		</div>
+		    	</div>
+		    </div>
+		</main>
+		<Footer />
+	</div>
+	<script>
+		const activePage = window.location.pathname;
+		const navLinks = document.querySelectorAll('.navMenuItem a').forEach(link => {
+		  if(link.href.includes(`${activePage}`)){
+		    link.classList.add('nav-active');
+		    link.classList.remove('navAnimation');
+		  }
+		});
+
+		var h = document.querySelectorAll('.markdown p a');
+		 for (var i = 0; i < h.length; i++) {
+	        if (h[i].classList.length === 0) {
+	            h[i].classList.add("underline-animated");
+	        }
+	    };
+
+		(function() {
+		    var id = 'c7a663ac-d1e9-11ec-a915-0242ac130002';
+		    var ci_search = document.createElement('script');
+		    ci_search.type = 'text/javascript';
+		    ci_search.async = true;
+		    ci_search.src = 'https://cse.expertrec.com/api/js/ci_common.js?id=' + id;
+		    var s = document.getElementsByTagName('script')[0];
+		    s.parentNode.insertBefore(ci_search, s);
+		})();
+
+	</script>
+</body>
+</html>

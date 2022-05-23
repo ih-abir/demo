@@ -1,99 +1,68 @@
 ---
-import BaseLayout from "../../layout/BaseLayout.astro"
-import BlogPostPreview from '../../components/BlogPostPreview.astro';
+import TodoPostPreview from '../../layouts/TodoPostPreview.astro';
 
 export async function getStaticPaths() {
-   const GqlQuery = `{
-    todoDetails{
-       data{
-            id
-            attributes{
-              title
-                body
-                image_blob{
-                  data{
-                      id
-                      attributes{
-                          url
-                          alternativeText
-                      }
-                  }
-              }
-              main_Image{
-                  data{
-                      id
-                      attributes{
-                          url
-                          alternativeText
-                      }
-                  }
-              }
-          }
-      }
-   }
-}`;
+    const GqlQuery = `{
+        todoDetails {
+            data{
+                id
+                attributes{
+                    Title
+                    Description
+                    slug
+                    Hero_image{
+                        data{
+                            id
+                            attributes{
+                                url
+                                alternativeText
+                            }
+                        }
+                    }
+                    Image_blob{
+                        data{
+                            id
+                            attributes{
+                                url
+                                alternativeText
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }`;
+
+    
+    const response = await fetch(`${import.meta.env.DB_URL}`,
+       {
+           method:'POST',
+           headers: {
+             'Content-Type':'application/json',
+             'Authorization': `Bearer ${import.meta.env.ACCESS_TOKEN}`
+           },
+           body: JSON.stringify({
+             query: GqlQuery,
+           })
+       });
+
+    const data = await response.json();
+    const posts = data.data.todoDetails.data;
 
 
-const url = `${import.meta.env.Assets_URL}`;
-
-const response = await fetch(`${import.meta.env.DB_URL}`,
-   {
-       method:'POST',
-       headers: {
-         'Content-Type':'application/json',
-         'Authorization': `Bearer ${import.meta.env.ACCESS_TOKEN}`
-       },
-       body: JSON.stringify({
-         query: GqlQuery,
-       })
-   });
-
-const data = await response.json();
-const posts = data.data.todoDetails.data;
-
-
-
-  return posts.map((attributes) => {
-    return {
-      params: { slug: post.slug },
-      props: { attributes }
-    };
-  });
-
-const {slug} = Astro.params;
-const {attributes} = Astro.props;
-const { posts } = Astro.props;
-
-// const posts  =  await fetch(`http://localhost:1337/posts`).then(res => res.json())
-
+    return posts.map((post) => {
+        return {
+            params: {slug: post.attributes.slug},
+            props: {post: post.attributes}
+        };
+    });
 }
+const {slug} = Astro.params;
+const {post} = Astro.props;
 
 ---
 
-<!DOCTYPE html>
-<BaseLayout title={title} description={body} permalink={permalink} canonicalURL={Astro.request.canonicalURL.href}>
-  <Container>
-    <article class="blog-page-content__article">
-      <section class="postlist">
-        {posts.data.map((attributes) => <BlogPostPreview attributes={attributes} />)}
-      </section>
-    </article>
-    </Container>
-</BaseLayout>
+<TodoPostPreview post={post} />
+ 
 
-<style>
- /* Posts list */
-  .postlist {
-    padding: 1rem 0;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 2rem;
-    list-style: none;
-  }
-    
-  @media screen and (max-width: 769px) {
-    .postlist {
-      grid-template-columns: 1fr;
-    }
-  }
-</style>
+

@@ -1,7 +1,14 @@
 ---
 import { Picture } from "astro:assets";
+import Icon from "@components/Icon.astro";
 
 import Brand from "@images/brand-logo.png";
+
+import socialLogo1 from "@images/facebook-logo.svg";
+import socialLogo2 from "@images/twitter-logo.svg";
+import socialLogo3 from "@images/instagram-logo.svg"; 
+import socialLogo4 from "@images/linkedin-logo.svg";
+import socialLogo5 from "@images/pinterest-logo.svg";
 
 const footerLinks = [
   "Music Distribution",
@@ -15,6 +22,24 @@ const footerLinks = [
   "FAQ",
   "Contact"
 ]
+
+const socialLogos = [
+  {
+    src: socialLogo1,
+  },
+  {
+    src: socialLogo2,
+  },
+  {
+    src: socialLogo3,
+  },
+  {
+    src: socialLogo4,
+  },
+  {
+    src: socialLogo5,
+  },
+];
 ---
 
 <footer class="py-[30px] bg-black">
@@ -57,6 +82,18 @@ const footerLinks = [
             contact@identitymusic.com
           </a>
           <p>(+44) 1892 280 448</p>
+        </div>
+
+        <div class="flex flex-wrap space-x-5">
+          {socialLogos.map(({src}) => (
+            <Icon
+              src={src}
+              class:list={[
+                "size-5 fill-white hover:fill-primary",
+                "transition-all duration-300 ease-in-out cursor-pointer"
+              ]}
+            />
+          ))}
         </div>
       </div>
     </div>

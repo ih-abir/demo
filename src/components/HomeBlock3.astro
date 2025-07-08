@@ -112,7 +112,10 @@ const items = [
     <div class="carousel-wrapper flex items-center gap-5">
       <button
         data-scroll="-1"
-        class="arrow lg:opacity-0 group-hover:opacity-100"
+        class:list={[
+          "arrow lg:opacity-0 group-hover:opacity-100",
+          "transition-all duration-300 ease-in-out",
+        ]}
       >
         &#10094;
       </button>
@@ -166,7 +169,7 @@ const items = [
                   "text-dark-lighter line-clamp-6"
                 ]}
               >
-                  {intro}
+                {intro}
               </div>
             </div>
           ))
@@ -174,7 +177,10 @@ const items = [
       </div>
       <button
         data-scroll="1"
-        class="arrow lg:opacity-0 group-hover:opacity-100"
+        class:list={[
+          "arrow lg:opacity-0 group-hover:opacity-100",
+          "transition-all duration-300 ease-in-out",
+        ]}
       >
         &#10095;
       </button>

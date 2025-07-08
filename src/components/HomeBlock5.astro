@@ -148,7 +148,10 @@ const items = [
     >
     <button
       data-scroll="-1"
-      class="arrow left lg:opacity-0 group-hover:opacity-100"
+      class:list={[
+        "arrow left lg:opacity-0 group-hover:opacity-100",
+        "transition-all duration-300 ease-in-out",
+      ]}
     >
       &#10094;
     </button>
@@ -198,7 +201,10 @@ const items = [
     </div>
     <button
       data-scroll="1"
-      class="arrow right lg:opacity-0 group-hover:opacity-100"
+      class:list={[
+        "arrow right lg:opacity-0 group-hover:opacity-100",
+        "transition-all duration-300 ease-in-out",
+      ]}
     >
       &#10095;
     </button>

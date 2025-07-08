@@ -1,0 +1,186 @@
+---
+import { Picture } from "astro:assets";
+
+import image1 from "@images/moonwax.jpg";
+import image2 from "@images/neolux.jpg";
+import image3 from "@images/rebecca.jpg";
+import image4 from "@images/leo.jpg";
+import image5 from "@images/izabeats.jpg";
+import image6 from "@images/rvdy.jpg";
+import image7 from "@images/michael.jpg";
+import image8 from "@images/kendra.jpg";
+import image9 from "@images/mario.jpg";
+
+const items = [
+  {
+    title: "Moon Wax",
+    intro: "Moon Wax are breaking the boundaries of music by drawing influences from everything from old school jazz and RnB to 90's funk and house. With thumping bass lines, flamboyant guitar riffs and outer space synth sounds, core members Billy Smith and Robb Maynard explore the world of the creative arts.",
+    img: image1,
+  },
+  {
+    title: "Neolux",
+    intro: "Neolux is an independent hardstyle/hard dance producer from Romania. Having experimented under different genres beforehand as Rudy Zensky or RVDY, Neolux created heavy dancefloor-oriented music with a strong focus on storytelling and atmosphere, making use of plenty of orchestral sections blended together.",
+    img: image2,
+  },
+  {
+    title: "Rebecca Mardal",
+    intro: "Rebecca Mardal is a Swedish guitarist & producer, seamlessly blending calming LoFi beats with soulful guitar solos. Her instrumental talents create personal and finely crafted music that has been described as \"what floating on clouds sounds like.\"",
+    img: image3,
+  },
+  {
+    title: "leo.",
+    intro: "Through his catchy melodies and honest lyrics, leo.'s music demonstrates a raw interpretation of life and its experiences. On his own artistic lane, leo. strives to create music that will connect with his audience on a deeper level, as well as a safe space where listeners can feel understood.",
+    img: image4,
+  },
+  {
+    title: "IzaBeats",
+    intro: "With traditional instrumental skills and modern production techniques, IzaBeats stands out from the crowd! Creating lofi with a \"handmade\" feel and being fully connected within the music community means you can always expect great music and collaborations from IzaBeats.",
+    img: image5,
+  },
+  {
+    title: "RVDY",
+    intro: "RVDY delivers both cutting-edge electronic tracks as well as cinematic experiences, fusing together Drum & Bass, Trap and Electro with Rock, Synth-wave and cinematic/orchestral music in an epic clash of genres, all of this in the pursuit of the ultimate futuristic soundtrack.",
+    img: image6,
+  },
+  {
+    title: "Michael Logozar",
+    intro: "Michael Logozar is a composer and producer based in the Nashville area. His piano based cinematic music is known for delivering heart felt melodies with a rare level of artistry and emotion. His solo piano work has received 6 album of the year nominations and his multi-instrumental work has been featured in film and television.",
+    img: image7,
+  },
+  {
+    title: "Kendra Logozar",
+    intro: "Modern Classical composer and pianist Kendra Logozar is a fresh and inspiring voice in the instrumental genre. Her tender and elegant melodies reflect her love for classical repertoire and a new generation of modern classical music.",
+    img: image8,
+  },
+  {
+    title: "Mario Viñuela",
+    intro: "Mario Viñuela is a Spanish composer made for film, TV and theatre productions. Not only has Mario mastered the beauty of piano but he also plays a variety of instruments that allow his sounds to transcend any language barrier. Mario is a great example of how making your music accessible can lead to great success!",
+    img: image9,
+  }
+]
+---
+
+<style lang="scss">
+  :root {
+    --card-gap: 30px;
+    --visible-cards: 1; /* Default to 1 card */
+  }
+
+  @media (min-width: 640px) {
+    :root {
+      --visible-cards: 2;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    :root {
+      --visible-cards: 3;
+    }
+  }
+
+  .carousel-wrapper {
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .carousel {
+    display: flex;
+    overflow-x: scroll;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    gap: var(--card-gap);
+  }
+  .carousel::-webkit-scrollbar {
+    display: none;
+  }
+
+  .card {
+    flex: 0 0 calc((100% - (var(--card-gap) * (var(--visible-cards) - 1))) / var(--visible-cards));
+    scroll-snap-align: center;
+  }
+
+  .arrow {
+    @apply justify-center items-center cursor-pointer
+      text-[clamp(1.5rem,1.2rem+0.75vw,1.875rem)] text-[#000];
+  }
+
+</style>
+
+<div class="section-v-pad group">
+  <div class="wrapper grid division-gap text-white text-center">
+
+    <div class="carousel-wrapper flex items-center gap-5">
+      <button
+        data-scroll="-1"
+        class="arrow lg:opacity-0 group-hover:opacity-100"
+      >
+        &#10094;
+      </button>
+      <div class="carousel" id="carousel">
+        {
+          items.map(({title, intro, img}) => (
+            <div class="card flex flex-col gap-4">
+              <Picture
+                class="block sm:hidden w-full h-full object-cover"
+                src={img}
+                alt="header-image"
+                width={300}
+                height={200}
+                widths={[235, 327, 465, 524]}
+                sizes={[
+                  "(max-width: 325px) 235px, (max-width: 425px) 327px,",
+                  "(max-width: 575px) 465px, 524px",
+                ].join(", ")}
+                formats={["avif", "webp"]}
+                loading="lazy"
+              />
+              <Picture
+                class="hidden sm:block lg:hidden w-full h-full object-cover"
+                src={img}
+                alt="header-image"
+                width={300}
+                height={200}
+                widths={[305, 320, 394, 422]}
+                sizes={[
+                  "(max-width: 767px) 305px, (max-width: 799px) 320px",
+                  "(max-width: 859px) 394px, 422px",
+                ].join(", ")}
+                formats={["avif", "webp"]}
+                loading="lazy"
+              />
+              <Picture
+                class="hidden lg:block w-full h-full object-cover"
+                src={img}
+                alt="header-image"
+                width={300}
+                height={200}
+                widths={[310, 355]}
+                sizes={"(max-width: 1151px) 310px, 355px"}
+                formats={["avif", "webp"]}
+                loading="lazy"
+              />
+              <div class="poppins text-lg font-semibold text-dark">{title}</div>
+              <div 
+                class:list={[
+                  "poppins text-sm leading-[160%]",
+                  "text-dark-lighter line-clamp-6"
+                ]}
+              >
+                  {intro}
+              </div>
+            </div>
+          ))
+        }
+      </div>
+      <button
+        data-scroll="1"
+        class="arrow lg:opacity-0 group-hover:opacity-100"
+      >
+        &#10095;
+      </button>
+    </div>
+  </div>
+</div>
+
+
+

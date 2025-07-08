@@ -1,0 +1,27 @@
+---
+// @ts-ignore
+import { readFileSync } from "fs";
+
+const { src, class: className } = Astro.props;
+
+const actualSrc = typeof src === "string"
+  ? src
+  : typeof src?.src === "string"
+    ? src.src
+    : String(src);
+
+const cleanSrc = actualSrc.startsWith("/_astro/")
+  ? ( "./dist/" + actualSrc)
+  : actualSrc.replace("/@fs/", "").split("?")[0];
+
+let file;
+try {
+  file = actualSrc.startsWith("https:") 
+    ? await fetch(actualSrc).then(res => res.ok ? res.text() : "")
+    : readFileSync(cleanSrc, "utf-8");
+} catch { file = ""; }
+
+const svgElement = file.replace(">"[0], ` class='${className}'>`);
+---
+
+<Fragment set:html={svgElement} />

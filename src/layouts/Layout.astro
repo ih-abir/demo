@@ -1,0 +1,69 @@
+---
+import "../styles/style.scss";
+
+import Navbar from "@components/Navbar.astro";
+import Footer from "@components/Footer.astro";
+
+import Brand from "@images/brand-favicon.svg";
+
+const title = "🎶 Identity Music: UK digital music distribution for independent artists & labels",
+	description = "Upload your music to global streaming services with Identity Music's distribution platform. UK experts in music promotion, rights management, distribution & publishing. Friendly support team, fast upload times & exclusive promotional support for independent artists & labels across the world. Publish your music now!";
+---
+
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="keywords" content="">
+		<link rel="icon" type="image/svg+xml" href={Brand?.src} />
+		<meta name="robots" content="all" >
+		<meta name="googlebot" content="all" >
+		<title>{title}</title>
+		<meta name="description" content={description} />
+	</head>
+	<body>
+    <div
+      class:list={[
+        "fixed inset-0 size-screen z-[-99]",
+        "bg-[url(src/assets/bg-image.webp)] bg-cover bg-center"
+      ]}
+    ></div>
+    
+		<div class="block w-full">
+      <Navbar />
+      <main>
+        <slot />
+      </main>
+    </div>
+
+    <Footer />
+
+    <script>
+      document.addEventListener("click", (e) => {
+        const btn = e.target.closest("[data-scroll]");
+        if (!btn) return;
+
+        const dir = +btn.dataset.scroll,
+          carousel = btn.closest(".carousel-wrapper")?.querySelector(".carousel");
+        if (!carousel) return;
+
+        const card = carousel.querySelector(".card"),
+          width = card.offsetWidth + parseFloat(getComputedStyle(card).gap || 0),
+          max = carousel.scrollWidth - carousel.clientWidth,
+          pos = carousel.scrollLeft,
+          step = width * Math.abs(dir);
+
+        carousel.scrollTo({
+          left: dir > 0
+            ? (pos >= max - 1 ? 0 : Math.min(pos + step, max))
+            : (pos <= 1 ? max : Math.max(pos - step, 0)),
+          behavior:
+            (dir > 0 && pos < max - 1) || (dir < 0 && pos > 1)
+              ? "smooth"
+              : "auto",
+        });
+      });
+    </script>
+	</body>
+</html>

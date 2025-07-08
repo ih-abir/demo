@@ -1,0 +1,77 @@
+---
+import { Picture } from "astro:assets";
+
+import Brand from "@images/brand-logo.png";
+
+const footerLinks = [
+  "Music Distribution",
+  "Publishing Administration",
+  "Rights Management",
+  "Promotion",
+  "Label Services",
+  "Blog",
+  "Testimonials",
+  "Careers",
+  "FAQ",
+  "Contact"
+]
+---
+
+<footer class="py-[30px] bg-black">
+  <div class="wrapper text-white pt-[60px] pb-[30px]">
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 division-gap">
+      <div>
+        <Picture
+          src={Brand}
+          alt="Brand Logo"
+          width={170}
+          height={100}
+          class="width-[170px] h-fit object-contain"
+          formats={["avif", "webp"]}
+        />
+      </div>
+
+      <div class="flex flex-col division-gap">
+        <div class="poppins text-lg font-bold">Learn About Identity Music</div>
+        <ul class="list-none p-0">
+          {footerLinks.map(link => (
+            <li class="py-2">
+              <a href="#" class="text-sm text-white hover:underline">{link}</a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div class="flex flex-col division-in-gap">
+        <div class="poppins text-lg font-bold">Contact</div>
+        <div class="flex flex-col division-in-element-gap">
+          <address class="not-italic leading-[200%]">
+            <span class="font-bold">Identity Music Ltd</span><br />
+            Lamberhurst Vineyard, Furnace Lane,<br />
+            Tunbridge Wells, Kent, TN3 8LA, UK
+          </address>
+          <a
+            href="mailto:contact@identitymusic.com"
+            class="hover:underline"
+          >
+            contact@identitymusic.com
+          </a>
+          <p>(+44) 1892 280 448</p>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class:list={[
+        "flex flex-wrap justify-between text-center py-[50px]",
+        "division-in-element-gap mt-[clamp(3.75rem,-0.75rem+11.25vw,9.375rem)]"
+      ]}
+    >
+      <p class="text-sm">
+        <a href="#" class="hover:underline">Privacy Policy</a>
+      </p>
+      <p class="text-sm">
+        © {new Date().getFullYear()} Identity Music Ltd. All Rights Reserved.
+      </p>
+  </div>
+</footer>

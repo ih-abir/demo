@@ -1,0 +1,67 @@
+---
+import { Picture } from "astro:assets";
+
+import HeaderImage from "@images/header-image.jpg";
+---
+
+<div 
+  class:list={[
+    "relative flex",
+    "w-full h-screen py-[125px] lg:py-[155px]"
+  ]}
+>
+  <div class:list={[
+    "wrapper z-[50] flex flex-col md:flex-row h-fit",
+    "gap-5 py-[clamp(1.25rem,-2.75rem+10vw,6.25rem)] text-white"
+    ]}
+  >
+    <h1 
+      class:list={[
+        "order-2 md:order-1 flex-none font-bold",
+        "leading-[110%] text-[clamp(2.5rem,1rem+3.75vw,4.375rem)]",
+      ]}
+    >
+      Identity Music
+    </h1>
+
+    <div 
+      class:list={[
+        "order-1 md:order-2 flex items-center",
+        "md:h-[clamp(3.438rem,0.58rem+5.952vw,5.938rem)]"
+      ]}
+    >
+      <span class="w-[68px] h-[5px] bg-[#ff5ee1]"></span>
+    </div>
+
+    <div
+      class:list={[
+        "order-3 w-fit font-bold leading-[110%]",
+        "text-[clamp(2.5rem,1rem+3.75vw,4.375rem)]",
+      ]}
+    >
+      <div class="flex-none">Digital Music</div>
+      Distribution
+    </div>
+  </div>
+
+  <div
+    class:list={[
+      "absolute inset-0 z-10",
+      "w-full"
+    ]}
+  >
+    <Picture
+      class="w-full h-full object-cover"
+      src={HeaderImage}
+      alt="header-image"
+      widths={[325, 415, 639, 767, 1023, 665, 1440, 1920]}
+      sizes={[
+        "(max-width: 325px) 325px, (max-width: 415px) 415px",
+        "(max-width: 639px) 639px, (max-width: 767px) 767px",
+        "(max-width: 1023px) 1023px, (max-width: 1440px) 1440px, 1920px",
+      ].join(", ")}
+      formats={["avif", "webp"]}
+      loading="eager"
+    />
+  </div>
+</div>

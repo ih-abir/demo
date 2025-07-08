@@ -56,3 +56,16 @@ h2 {
   @apply text-sm font-bold py-[18px] px-[55px] rounded-md 
     transition-all duration-200 ease-in-out cursor-pointer hover:-translate-y-[3px];
 }
+
+.reveal-up {
+  opacity: 0;
+  filter: blur(1px);
+  transform: translateY(80px);
+  transition: all .75s ease;
+}
+
+.reveal-up.visible {
+  opacity: 1;
+  filter: blur(0);
+  transform: translateY(0);
+}

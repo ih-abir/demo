@@ -64,6 +64,15 @@ const title = "🎶 Identity Music: UK digital music distribution for independen
               : "auto",
         });
       });
+
+      document.querySelectorAll('.reveal-up').forEach(el=>
+        new IntersectionObserver((e,o)=>{
+          if(e[0].isIntersecting){
+            el.classList.add('visible');
+            o.unobserve(el);
+          }
+        }).observe(el)
+      );
     </script>
 	</body>
 </html>

@@ -23,7 +23,7 @@
       <div class="grid grid-cols-3 division-gap">
         <div 
           class:list={[
-            "col-span-1 font-bold text-primary",
+            "counter col-span-1 font-bold text-primary",
             "text-[clamp(2.5rem,1rem+3.75vw,4.375rem)]"
           ]}
         >
@@ -40,7 +40,7 @@
       <div class="grid grid-cols-3 division-gap">
         <div 
           class:list={[
-            "col-span-1 font-bold text-primary",
+            "counter col-span-1 font-bold text-primary",
             "text-[clamp(2.5rem,1rem+3.75vw,4.375rem)]"
           ]}
         >
@@ -55,3 +55,16 @@
       </div>
   </div>
 </div>
+
+
+<script is:inline>
+  document.querySelectorAll('.counter').forEach(el=>{
+    let n=0, t=+el.textContent;
+    new IntersectionObserver((e,o)=>{
+      if(e[0].isIntersecting){
+        let i=setInterval(()=>{el.textContent=++n;if(n==t)clearInterval(i)},6);
+        o.unobserve(el);
+      }
+    }).observe(el);
+  });
+</script>

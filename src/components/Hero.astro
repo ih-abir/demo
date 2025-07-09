@@ -1,6 +1,8 @@
 ---
 import { Picture } from "astro:assets";
+import Icon from "@components/Icon.astro";
 
+import mouseIcon from "@images/mouse-icon.svg";
 import HeaderImage from "@images/header-image.jpg";
 import HeaderGradient1 from "@images/header-gradient1.png";
 import HeaderGradient3 from "@images/header-gradient3.png";
@@ -38,41 +40,45 @@ import HeaderGradient3 from "@images/header-gradient3.png";
 </style>
 <div 
   class:list={[
-    "relative flex overflow-hidden",
-    "w-full h-screen max-h-[1600px] py-[125px] lg:py-[155px]"
+    "relative flex items-stretch overflow-hidden w-full",
+    "h-full sm:aspect-[16/10] md:aspect-[16/9] max-h-screen",
+    "py-[95px] lg:py-[clamp(6.875rem,8.567rem+-3.526vw,8.25rem)]"
   ]}
 >
-  <div class:list={[
-    "wrapper z-[50] flex flex-col md:flex-row h-fit",
-    "gap-5 py-[clamp(1.25rem,-2.75rem+10vw,6.25rem)] text-white"
-    ]}
-  >
-    <h1 
-      class:list={[
-        "order-2 md:order-1 flex-none font-bold",
-        "leading-[110%] text-[clamp(2.5rem,1rem+3.75vw,4.375rem)]",
-      ]}
-    >
-      Identity Music
-    </h1>
+  <div class="wrapper grid z-[50] text-white">
+    <div class="flex flex-col py-[clamp(1.25rem,-2.75rem+10vw,6.25rem)] md:flex-row h-fit gap-5">
+      <h1 
+        class:list={[
+          "order-2 md:order-1 flex-none font-bold",
+          "leading-[110%] text-[clamp(2.5rem,1rem+3.75vw,4.375rem)]",
+        ]}
+      >
+        Identity Music
+      </h1>
 
-    <div 
-      class:list={[
-        "order-1 md:order-2 flex items-center",
-        "md:h-[clamp(3.438rem,0.58rem+5.952vw,5.938rem)]"
-      ]}
-    >
-      <span class="w-[68px] h-[5px] bg-[#ff5ee1]"></span>
+      <div 
+        class:list={[
+          "order-1 md:order-2 flex items-center",
+          "md:h-[clamp(3.438rem,0.58rem+5.952vw,5.938rem)]"
+        ]}
+      >
+        <span class="w-[68px] h-[5px] bg-[#ff5ee1]"></span>
+      </div>
+
+      <div
+        class:list={[
+          "order-3 w-fit font-bold leading-[110%]",
+          "text-[clamp(2.5rem,1rem+3.75vw,4.375rem)]",
+        ]}
+      >
+        <div class="flex-none">Digital Music</div>
+        Distribution
+      </div>
     </div>
 
-    <div
-      class:list={[
-        "order-3 w-fit font-bold leading-[110%]",
-        "text-[clamp(2.5rem,1rem+3.75vw,4.375rem)]",
-      ]}
-    >
-      <div class="flex-none">Digital Music</div>
-      Distribution
+    <div class="hidden md:flex items-center gap-2 w-full mt-auto">
+      <div class="poppins text-lg">Scroll for more</div>
+      <Icon src={mouseIcon} class="fill-white size-7" />
     </div>
   </div>
 

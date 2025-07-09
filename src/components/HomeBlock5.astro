@@ -211,17 +211,16 @@ const items = [
     const carousel = document.getElementById("testimonial-carousel");
     if (!carousel) return;
 
-    const cards = carousel.querySelectorAll(".card");
-    const total = cards.length;
-    const mq = matchMedia("(min-width:768px)");
+    const cards = carousel.querySelectorAll(".card"),
+      total = cards.length,
+      mq = matchMedia("(min-width:768px)");
 
     const getCardWidth = () =>
-      cards[0].offsetWidth + parseFloat(getComputedStyle(carousel).gap || 0);
-
-    const highlight = () => {
-      const scroll = carousel.scrollLeft;
-      const index = Math.round(scroll / getCardWidth());
-      let target = mq.matches ? (index + 1) % total : index % total;
+        cards[0].offsetWidth + parseFloat(getComputedStyle(carousel).gap || 0),
+      highlight = () => {
+        const scroll = carousel.scrollLeft,
+          index = Math.round(scroll / getCardWidth());
+        let target = mq.matches ? (index + 1) % total : index % total;
 
       if (!mq.matches && scroll >= carousel.scrollWidth - carousel.clientWidth - 1) {
         target = total - 1;

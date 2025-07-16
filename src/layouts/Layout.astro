@@ -1,10 +1,12 @@
 ---
 import "../styles/style.scss";
 
+import { Picture } from "astro:assets";
 import Navbar from "@components/Navbar.astro";
 import Footer from "@components/Footer.astro";
 
 import Brand from "@images/brand-favicon.svg";
+import BgImage from "@images/bg-image.webp";
 
 const title = "🎶 Identity Music: UK digital music distribution for independent artists & labels",
 	description = "Upload your music to global streaming services with Identity Music's distribution platform. UK experts in music promotion, rights management, distribution & publishing. Friendly support team, fast upload times & exclusive promotional support for independent artists & labels across the world. Publish your music now!";
@@ -25,10 +27,23 @@ const title = "🎶 Identity Music: UK digital music distribution for independen
 	<body>
     <div
       class:list={[
-        "fixed inset-0 size-screen z-[-99]",
-        "bg-[url(src/assets/bg-image.webp)] bg-cover bg-center"
+        "fixed inset-0 z-[-99]",
+        "size-screen bg-cover bg-center"
       ]}
-    ></div>
+    >
+      <Picture
+        class="w-full h-full object-cover"
+        src={BgImage}
+        alt="background-image"
+        widths={[325, 415, 639, 767, 1023, 665, 1440, 1920]}
+        sizes={[
+          "(max-width: 325px) 325px, (max-width: 415px) 415px",
+          "(max-width: 639px) 639px, (max-width: 767px) 767px",
+          "(max-width: 1023px) 1023px, (max-width: 1440px) 1440px, 1920px",
+        ].join(", ")}
+        formats={["avif", "webp"]}
+      />
+    </div>
     
 		<div class="block w-full">
       <Navbar />

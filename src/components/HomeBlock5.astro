@@ -58,42 +58,34 @@ const items = [
 ---
 
 <style lang="scss">
-  :root {
-    --card-gap: 30px;
-    --visible-cards: 1; /* Default to 1 card */
-  }
-
-  @media (min-width: 640px) {
-    :root {
-      --visible-cards: 1.5;
-    }
-  }
-
-  @media (min-width: 768px) {
-    :root {
-      --visible-cards: 2.5;
-    }
-  }
-
   .carousel-wrapper {
     width: 100%;
     overflow: hidden;
   }
-
+  
   .carousel {
     display: flex;
     overflow-x: scroll;
     scroll-snap-type: x mandatory;
     scroll-behavior: smooth;
-    gap: var(--card-gap);
+    gap: 30px;
   }
+
   .carousel::-webkit-scrollbar {
     display: none;
   }
 
   .card {
-    flex: 0 0 calc((100% - (var(--card-gap) * (var(--visible-cards) - 1))) / var(--visible-cards));
+    flex: 0 0 calc((100% - (30px * (1 - 1))) / 1);
     scroll-snap-align: center;
+
+    @media (min-width: 640px) {
+      flex: 0 0 calc((100% - (30px * (1.5 - 1))) / 1.5);
+    }
+
+    @media (min-width: 768px) {
+      flex: 0 0 calc((100% - (30px * (2.5 - 1))) / 2.5);
+    }
   }
 
   .arrow {
